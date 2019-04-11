@@ -143,7 +143,7 @@
     <Folder Include="Jars\" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="..\..\lib\curbside-android-sdk.aar">
+    <LibraryProjectZip Include="..\..\externals\curbside-android-sdk.aar">
       <Link>curbside-android-sdk.aar</Link>
     </LibraryProjectZip>
   </ItemGroup>
