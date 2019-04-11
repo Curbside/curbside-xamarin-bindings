@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<!--
+  This sample removes the class: android.support.v4.content.AsyncTaskLoader.LoadTask:
+  <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='AsyncTaskLoader.LoadTask']" />
+  
+  This sample removes the method: android.support.v4.content.CursorLoader.loadInBackground:
+  <remove-node path="/api/package[@name='android.support.v4.content']/class[@name='CursorLoader']/method[@name='loadInBackground']" />
+  -->
+
+    <remove-node path="/api/package[@name='rx.observers']/class[@name='SerializedSubscriber']"/>
+    
+    <remove-node path="/api/package[@name='rx.android.schedulers']/class[@name='LooperScheduler']"/>
+    <remove-node path="/api/package[@name='rx.observables']/class[@name='AsyncOnSubscribe']"/>
+    <remove-node path="/api/package[@name='rx.observables']/class[@name='SyncOnSubscribe']"/>
+    <remove-node path="/api/package[@name='rx.observers']/class[@name='SafeSubscriber']"/>
+    <remove-node path="/api/package[@name='rx']/class[@name='Subscriber']"/>
+    <remove-node path="/api/package[@name='rx.subjects']/class[@name='Subject']"/>
+    <remove-node path="/api/package[@name='rx.subjects']/class[@name='TestSubject']"/>
+    <remove-node path="/api/package[@name='rx.subjects']/class[@name='UnicastSubject']"/>
+    <remove-node path="/api/package[@name='rx.subjects']/class[@name='AsyncSubject']"/>
+    <remove-node path="/api/package[@name='rx.subjects']/class[@name='BehaviorSubject']"/>
+    <remove-node path="/api/package[@name='rx.subjects']/class[@name='PublishSubject']"/>
+    <remove-node path="/api/package[@name='rx.subjects']/class[@name='ReplaySubject']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='CompletableOnSubscribeTimeout']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='EmptyObservableHolder']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='NeverObservableHolder']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='BufferUntilSubscriber']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='CachedObservable']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='CompletableOnSubscribeConcat']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='CompletableOnSubscribeConcatArray']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='CompletableOnSubscribeConcatIterable']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='CompletableOnSubscribeMerge']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='CompletableOnSubscribeMergeArray']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='CompletableOnSubscribeMergeDelayErrorArray']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='CompletableOnSubscribeMergeDelayErrorIterable']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='CompletableOnSubscribeMergeIterable']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='OnSubscribeAmb']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='OnSubscribeAutoConnect']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='OperatorTimeout']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='OperatorTimeoutWithSelector']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='SingleOnSubscribeDelaySubscriptionOther']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='OperatorToMap']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='SingleOnSubscribeUsing']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='OperatorToMultimap']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='OnSubscribeSingle']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='SingleOperatorOnErrorResumeNext']"/>
+    <remove-node path="/api/package[@name='rx.internal.operators']/class[@name='SingleDoAfterTerminate']"/>
+    <remove-node path="/api/package[@name='rx.internal.util']/class[@name='ScalarSynchronousSingle']"/>
+    <remove-node path="/api/package[@name='rx.internal.util.unsafe']/class[@name='ConcurrentCircularArrayQueue']"/>
+    <remove-node path="/api/package[@name='rx.internal.util.atomic']/class[@name='MpscLinkedAtomicQueue']"/>
+    <remove-node path="/api/package[@name='rx.internal.util.unsafe']/class[@name='MpscLinkedQueue']"/>
+    <remove-node path="/api/package[@name='rx.internal.util.unsafe']/class[@name='SpscLinkedQueue']"/>
+    <remove-node path="/api/package[@name='rx.internal.util.unsafe']/class[@name='SpscUnboundedArrayQueue']"/>
+    <remove-node path="/api/package[@name='rx.internal.util.atomic']/class[@name='SpscAtomicArrayQueue']"/>
+    <remove-node path="/api/package[@name='rx.internal.util.atomic']/class[@name='SpscLinkedAtomicQueue']"/>
+    <remove-node path="/api/package[@name='rx.internal.util']/class[@name='ActionSubscriber']"/>
+    <remove-node path="/api/package[@name='rx.internal.util']/class[@name='InternalObservableUtils']"/>
+</metadata>

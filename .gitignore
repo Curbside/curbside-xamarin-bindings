@@ -1,0 +1,11 @@
+bin/
+obj/
+externals/
+tools/
+packages/
+
+*.user
+*.userprefs
+*.nupkg
+
+.DS_Store

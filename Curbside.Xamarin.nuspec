@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Curbside.Xamarin</id>
+    <title>Curbside SDK for Xamarin</title>
+    <version>$version$</version>
+    <authors>Curbside</authors>
+    <owners>Curbside</owners>
+    <description>Curbside SDK Bindings for Xamarin.Android and Xamarin.iOS</description>
+    <copyright>Copyright © Curbside</copyright>
+    <projectUrl>https://curbside.com/docs/</projectUrl>
+    <licenseUrl>https://curbside.com/license/</licenseUrl>
+    <iconUrl>https://curbside.com/media/img/curbside_icon.png</iconUrl>
+    <dependencies>
+      <group targetFramework="MonoAndroid81">
+        <dependency id="Xamarin.Android.Support.v7.AppCompat" version="27.0.2" />
+
+        <dependency id="Xamarin.Firebase.Messaging" version="60.1142.1" />
+        <dependency id="Xamarin.Firebase.Iid" version="60.1142.1" />
+        <dependency id="Xamarin.Firebase.Common" version="60.1142.1" />
+        <dependency id="Xamarin.GooglePlayServices.Location" version="60.1142.1" />
+        <dependency id="Xamarin.GooglePlayServices.Maps" version="60.1142.1" />
+        <dependency id="Xamarin.GooglePlayServices.Places" version="60.1142.1" />
+        <dependency id="AndroidAltBeaconLibrary" version="2.7.0" />
+        <dependency id="GoogleGson" version="2.6.1.0" />
+        <dependency id="Square.OkIO" version="1.6.0.0" />
+        <dependency id="Square.OkHttp" version="2.7.5.0" />
+        <dependency id="Square.OkHttp.UrlConnection" version="2.7.5.0" />
+        <dependency id="Square.Retrofit" version="1.9.0.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="src/Curbside.Xamarin.Android/bin/Release/Curbside.Xamarin.Android.dll" target="lib/MonoAndroid81" />
+    <file src="src/Rx.RxAndroid/bin/Release/Rx.RxAndroid.dll" target="lib/MonoAndroid81" />
+    
+    <file src="src/Curbside.Xamarin.iOS/bin/Release/Curbside.Xamarin.iOS.dll" target="lib/Xamarin.iOS10" />
+  </files>
+</package>

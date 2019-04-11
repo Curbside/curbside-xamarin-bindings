@@ -1,0 +1,290 @@
+{
+  "project_info": {
+    "project_number": "389504600633",
+    "firebase_url": "https://testfcm-191217.firebaseio.com",
+    "project_id": "testfcm-191217",
+    "storage_bucket": "testfcm-191217.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389504600633:android:5f2ce611b339b1bd",
+        "android_client_info": {
+          "package_name": "com.curbside.connect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389504600633-a4soi1e5lggkgqk29almut5vrgeh6tfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9uN6PQQXR7l4UQ_o_4UVYdqaS_FXYHGQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389504600633:android:ffc7825f00f6a745",
+        "android_client_info": {
+          "package_name": "com.curbside.currytracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389504600633-a4soi1e5lggkgqk29almut5vrgeh6tfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9uN6PQQXR7l4UQ_o_4UVYdqaS_FXYHGQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389504600633:android:03f6b883ce346c52",
+        "android_client_info": {
+          "package_name": "com.curbside.pietracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389504600633-a4soi1e5lggkgqk29almut5vrgeh6tfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9uN6PQQXR7l4UQ_o_4UVYdqaS_FXYHGQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389504600633:android:3255eaffc2de80ba",
+        "android_client_info": {
+          "package_name": "com.curbside.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389504600633-a4soi1e5lggkgqk29almut5vrgeh6tfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9uN6PQQXR7l4UQ_o_4UVYdqaS_FXYHGQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389504600633:android:5d6a8ffc959ca3dc",
+        "android_client_info": {
+          "package_name": "com.curbside.usersessionapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389504600633-a4soi1e5lggkgqk29almut5vrgeh6tfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9uN6PQQXR7l4UQ_o_4UVYdqaS_FXYHGQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389504600633:android:5c6f42134f14750c",
+        "android_client_info": {
+          "package_name": "com.examplearriveapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389504600633-a4soi1e5lggkgqk29almut5vrgeh6tfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9uN6PQQXR7l4UQ_o_4UVYdqaS_FXYHGQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389504600633:android:22d91a1999f8d312",
+        "android_client_info": {
+          "package_name": "com.olo.curbsidetest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389504600633-a4soi1e5lggkgqk29almut5vrgeh6tfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9uN6PQQXR7l4UQ_o_4UVYdqaS_FXYHGQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389504600633:android:2f71eec99ca04ea2",
+        "android_client_info": {
+          "package_name": "com.reactlibrary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389504600633-a4soi1e5lggkgqk29almut5vrgeh6tfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9uN6PQQXR7l4UQ_o_4UVYdqaS_FXYHGQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389504600633:android:4771aa9465981a6b",
+        "android_client_info": {
+          "package_name": "curbside.com.cvsexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389504600633-a4soi1e5lggkgqk29almut5vrgeh6tfv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9uN6PQQXR7l4UQ_o_4UVYdqaS_FXYHGQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

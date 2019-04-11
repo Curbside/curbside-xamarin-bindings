@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<!-- Make the namespaces a bit nicer -->
+	<attr path="/api/package[@name='com.curbside.sdk']" name="managedName">Curbside</attr>
+	<attr path="/api/package[@name='com.curbside.sdk.config']" name="managedName">Curbside</attr>
+	<attr path="/api/package[@name='com.curbside.sdk.credentialprovider']" name="managedName">Curbside</attr>
+	<attr path="/api/package[@name='com.curbside.sdk.event']" name="managedName">Curbside</attr>
+	<attr path="/api/package[@name='com.curbside.sdk.model']" name="managedName">Curbside</attr>
+    <attr path="/api/package[@name='com.curbside.sdk.retailers']" name="managedName">Curbside</attr>
+
+	<!-- Make some binding types 'public' that are referenced by other bindings since they are used in public api's on the java side -->
+	<attr path="/api/package[@name='com.curbside.sdk']/class[@name='CSMonitoringSessionImpl']" name="visibility">public</attr>
+	<attr path="/api/package[@name='com.curbside.sdk']/class[@name='ADStory']" name="visibility">public</attr>
+	<attr path="/api/package[@name='com.curbside.sdk']/class[@name='CSUserSessionImpl']" name="visibility">public</attr>
+	<attr path="/api/package[@name='com.curbside.sdk']/class[@name='DeviceConfig']" name="visibility">public</attr>
+    <attr path="/api/package[@name='com.curbside.sdk']/class[@name='Subscription']" name="visibility">public</attr>
+    <attr path="/api/package[@name='com.curbside.sdk']/class[@name='FcmService']" name="visibility">public</attr>
+
+	<!-- In c#, we can't have an inner type and member with the same name, so rename some members so they don't collide with the inner types -->
+	<attr path="/api/package[@name='com.curbside.sdk.event']/class[@name='Path']/field[@name='path']" name="managedName">PathValue</attr>
+	<attr path="/api/package[@name='com.curbside.sdk']/class[@name='TrackingLocation']/field[@name='geo']" name="managedName">GeoValue</attr>
+	<attr path="/api/package[@name='com.curbside.sdk']/class[@name='LocationReport']/field[@name='iAmHere']" name="managedName">IAmHereValue</attr>
+
+    <!-- Remove a function that is abstract because it's hiding the parent implementation due to differences in Java and C# inheritance 
+         Also remove an unused class -->
+    <remove-node path="/api/package[@name='com.curbside.sdk']/class[@name='CSUserSession']/method[@name='setUserInfo' and count(parameter)=1 and parameter[1][@type='com.curbside.sdk.model.CSUserInfo']]"/>
+    <remove-node path="/api/package[@name='com.curbside.sdk']/class[@name='CSMockSimulator']"/>
+
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='Days']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='Duration']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='Instant']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='Weeks']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='YearMonth']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='LocalDate']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='MutablePeriod']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='Years']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='MonthDay']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='LocalDateTime']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='Months']"/>
+    <remove-node path="/api/package[@name='org.joda.time.chrono']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='Partial']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='LocalTime']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='Minutes']"/>
+    <remove-node path="/api/package[@name='org.joda.time.field']"/>
+    <remove-node path="/api/package[@name='org.joda.time.format']/class[@name='DateTimeParserBucket']"/>
+    <remove-node path="/api/package[@name='org.joda.time.format']/class[@name='DateTimeFormatterBuilder']"/>
+    <remove-node path="/api/package[@name='org.joda.time.base']/class[@name='BasePartial']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='Hours']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='Seconds']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='YearMonthDay']"/>
+    <remove-node path="/api/package[@name='org.joda.time']/class[@name='TimeOfDay']"/>
+    <remove-node path="/api/package[@name='org.joda.time.format']/class[@name='DateTimeFormat']"/>
+
+    <!-- Add nodes that have for no good reason for having been removed -->
+    <!--<add-node path="/api/package[@name='com.curbside.sdk']/class[@name='CSUserSessionImpl']/method[@name='startTripToSiteWithIdentifierAndETA']"/>-->
+
+    <!-- Clean up some parameter names so that we're not stuck with p1, p2, p3, petc. -->
+    <attr path="/api/package[@name='com.curbside.sdk']/class[@name='CSUserSession']/method[@name='startTripToSiteWithIdentifierAndETA' 
+    and count(parameter)=4 and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] 
+    and parameter[3][@type='org.joda.time.DateTime'] and parameter[4][@type='org.joda.time.DateTime']]/parameter[1]" name="managedName">siteId</attr>
+    <attr path="/api/package[@name='com.curbside.sdk']/class[@name='CSUserSession']/method[@name='startTripToSiteWithIdentifierAndETA' 
+    and count(parameter)=4 and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] 
+    and parameter[3][@type='org.joda.time.DateTime'] and parameter[4][@type='org.joda.time.DateTime']]/parameter[2]" name="managedName">trackToken</attr>
+    <attr path="/api/package[@name='com.curbside.sdk']/class[@name='CSUserSession']/method[@name='startTripToSiteWithIdentifierAndETA' 
+    and count(parameter)=4 and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] 
+    and parameter[3][@type='org.joda.time.DateTime'] and parameter[4][@type='org.joda.time.DateTime']]/parameter[3]" name="managedName">fromDate</attr>
+    <attr path="/api/package[@name='com.curbside.sdk']/class[@name='CSUserSession']/method[@name='startTripToSiteWithIdentifierAndETA' 
+    and count(parameter)=4 and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] 
+    and parameter[3][@type='org.joda.time.DateTime'] and parameter[4][@type='org.joda.time.DateTime']]/parameter[4]" name="managedName">toDate</attr>
+
+    <attr path="/api/package[@name='com.curbside.sdk.model']/class[@name='CSUserInfo']/constructor[@name='CSUserInfo' 
+    and count(parameter)=6 and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] 
+    and parameter[3][@type='java.lang.String'] and parameter[4][@type='java.lang.String']
+    and parameter[5][@type='java.lang.String'] and parameter[6][@type='java.lang.String']]/parameter[1]" name="managedName">fullName</attr>
+    <attr path="/api/package[@name='com.curbside.sdk.model']/class[@name='CSUserInfo']/constructor[@name='CSUserInfo' 
+    and count(parameter)=6 and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] 
+    and parameter[3][@type='java.lang.String'] and parameter[4][@type='java.lang.String']
+    and parameter[5][@type='java.lang.String'] and parameter[6][@type='java.lang.String']]/parameter[2]" name="managedName">emailAddress</attr>
+    <attr path="/api/package[@name='com.curbside.sdk.model']/class[@name='CSUserInfo']/constructor[@name='CSUserInfo' 
+    and count(parameter)=6 and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] 
+    and parameter[3][@type='java.lang.String'] and parameter[4][@type='java.lang.String']
+    and parameter[5][@type='java.lang.String'] and parameter[6][@type='java.lang.String']]/parameter[3]" name="managedName">smsNumber</attr>
+    <attr path="/api/package[@name='com.curbside.sdk.model']/class[@name='CSUserInfo']/constructor[@name='CSUserInfo' 
+    and count(parameter)=6 and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] 
+    and parameter[3][@type='java.lang.String'] and parameter[4][@type='java.lang.String']
+    and parameter[5][@type='java.lang.String'] and parameter[6][@type='java.lang.String']]/parameter[4]" name="managedName">licensePlate</attr>
+    <attr path="/api/package[@name='com.curbside.sdk.model']/class[@name='CSUserInfo']/constructor[@name='CSUserInfo' 
+    and count(parameter)=6 and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] 
+    and parameter[3][@type='java.lang.String'] and parameter[4][@type='java.lang.String']
+    and parameter[5][@type='java.lang.String'] and parameter[6][@type='java.lang.String']]/parameter[5]" name="managedName">vehicleMake</attr>
+    <attr path="/api/package[@name='com.curbside.sdk.model']/class[@name='CSUserInfo']/constructor[@name='CSUserInfo' and count(parameter)=6 
+    and parameter[1][@type='java.lang.String'] and parameter[2][@type='java.lang.String'] 
+    and parameter[3][@type='java.lang.String'] and parameter[4][@type='java.lang.String']
+    and parameter[5][@type='java.lang.String'] and parameter[6][@type='java.lang.String']]/parameter[6]" name="managedName">vehicleModel</attr>
+</metadata>
