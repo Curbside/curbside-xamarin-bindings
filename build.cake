@@ -1,22 +1,47 @@
+#addin nuget:?package=SharpZipLib
+#addin nuget:?package=Cake.Compression
+
 using Cake.Common.Build.TeamCity.Data;
 
-var TARGET = Argument("target", Argument ("t", "Default"));
-
-var RX_ANDROID_VERSION = "1.2.1";
-var RX_ANDROID_URL = $"http://search.maven.org/remotecontent?filepath=io/reactivex/rxandroid/{RX_ANDROID_VERSION}/rxandroid-{RX_ANDROID_VERSION}.aar";
-var RX_JAVA_VERSION = "1.1.6";
-var RX_JAVA_URL = $"http://search.maven.org/remotecontent?filepath=io/reactivex/rxjava/{RX_JAVA_VERSION}/rxjava-{RX_JAVA_VERSION}.jar";
+var target = Argument("target", Argument ("t", "Default"));
 
 var buildInfo = new TeamCityBuildInfo(Context.Environment);
 var buildNumber = string.IsNullOrWhiteSpace(buildInfo.Number) ? "0" : buildInfo.Number;
+var nugetVersion = $"1.0.{buildNumber}";
 
-var NUGET_VERSION = $"1.0.{buildNumber}";
+var externalVersions = new
+{
+    RxAndroid = "1.2.1",
+    RxJava = "1.1.6",
+    CurbsideIos = "3.27",
+    CurbsideAndroid = "3.2.4"
+};
 
 Task("externals").Does(() => 
 {
     EnsureDirectoryExists("./externals/");
-    DownloadFile(RX_ANDROID_URL, "./externals/rxandroid.aar");
-    DownloadFile(RX_JAVA_URL, "./externals/rxjava.jar");
+    CleanDirectories("./externals");
+
+    EnsureDirectoryExists("./tmp/");
+    CleanDirectories("./tmp");
+
+    DownloadFile(
+        $"http://search.maven.org/remotecontent?filepath=io/reactivex/rxandroid/{externalVersions.RxAndroid}/rxandroid-{externalVersions.RxAndroid}.aar", 
+        "./externals/rxandroid.aar");
+
+    DownloadFile(
+        $"http://search.maven.org/remotecontent?filepath=io/reactivex/rxjava/{externalVersions.RxJava}/rxjava-{externalVersions.RxJava}.jar", 
+        "./externals/rxjava.jar");
+
+    DownloadFile(
+        $"http://cs-web-downloads.s3-website-us-west-2.amazonaws.com/SDKs/curbside-android-sdk-release.{externalVersions.CurbsideAndroid}.aar",
+        "./externals/curbside-android-sdk.aar");
+
+    DownloadFile(
+        $"http://cs-web-downloads.s3-website-us-west-2.amazonaws.com/SDKs/Curbside.framework.v{externalVersions.CurbsideIos}.tar.gz",
+        "./tmp/curbside-ios.tar.gz");
+    GZipUncompress("./tmp/curbside-ios.tar.gz", "./tmp/curbside-ios");
+    CopyDirectory("./tmp/curbside-ios/Curbside/Curbside.framework", "./externals/Curbside.framework");
 });
 
 Task("libs").IsDependentOn("externals").Does(() => 
@@ -29,7 +54,7 @@ Task("nuget").IsDependentOn("libs").Does(() =>
 {
     NuGetPack("./Curbside.Xamarin.nuspec", new NuGetPackSettings 
     {
-        Version = NUGET_VERSION
+        Version = nugetVersion
     });
 });
 
@@ -44,4 +69,4 @@ Task("clean").Does(() =>
 
 Task("Default").IsDependentOn("nuget");
 
-RunTarget (TARGET);
+RunTarget(target);
