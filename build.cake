@@ -5,8 +5,7 @@ using Cake.Common.Build.TeamCity.Data;
 
 var target = Argument("target", Argument ("t", "Default"));
 
-var buildInfo = new TeamCityBuildInfo(Context.Environment);
-var buildNumber = string.IsNullOrWhiteSpace(buildInfo.Number) ? "0" : buildInfo.Number;
+var buildNumber = EnvironmentVariable("BUILD_BUILDNUMBER") ?? "0";
 var nugetVersion = $"1.0.{buildNumber}";
 
 var externalVersions = new
