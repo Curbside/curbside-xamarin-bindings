@@ -6,7 +6,7 @@ using Cake.Common.Build.TeamCity.Data;
 var target = Argument("target", Argument ("t", "Default"));
 
 var buildNumber = EnvironmentVariable("BUILD_BUILDNUMBER") ?? "0";
-var nugetVersion = $"1.0.{buildNumber}";
+var nugetVersion = $"3.2.{buildNumber}";
 
 var externalVersions = new
 {
