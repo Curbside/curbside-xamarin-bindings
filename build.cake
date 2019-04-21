@@ -55,6 +55,11 @@ Task("nuget").IsDependentOn("libs").Does(() =>
     {
         Version = nugetVersion
     });
+
+    NuGetPack("./Curbside.Xamarin.nuspec", new NuGetPackSettings 
+    {
+        Version = $"{nugetVersion}-beta"
+    });
 });
 
 Task("clean").Does(() => 

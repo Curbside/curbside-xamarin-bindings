@@ -13,8 +13,16 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: './'
-    Contents: '*.nupkg'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    Contents: '*-beta.nupkg'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/beta'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: './'
+    Contents: |
+      *.nupkg
+      !*beta*
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/release'
 
 - task: PublishBuildArtifacts@1
   inputs:
