@@ -51,12 +51,12 @@ Task("libs").IsDependentOn("externals").Does(() =>
 
 Task("nuget").IsDependentOn("libs").Does(() => 
 {
-    NuGetPack("./Curbside.Xamarin.nuspec", new NuGetPackSettings 
+    NuGetPack("./Curbside.nuspec", new NuGetPackSettings 
     {
         Version = nugetVersion
     });
 
-    NuGetPack("./Curbside.Xamarin.nuspec", new NuGetPackSettings 
+    NuGetPack("./Curbside.nuspec", new NuGetPackSettings 
     {
         Version = $"{nugetVersion}-beta"
     });
