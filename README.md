@@ -43,6 +43,7 @@ Register for an account at [Curbside Platform](https://dashboard.curbside.com). 
 ## Quick Start Guides
 - [iOS App Quick Start](https://developer.curbside.com/en/docs/getting-started/quickstart-ios-app/)
 - [Android App Quick Start](https://developer.curbside.com/en/docs/getting-started/quickstart-android-app/)
+
 The documentation is mostly in Objective-C, Swift and Java, but the Xamarin/C# APIs are almost 1:1 with the native APIs,so the
 docs should still be quite useful.
 
