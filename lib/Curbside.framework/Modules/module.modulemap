@@ -1,6 +1,0 @@
-framework module Curbside {
-  umbrella header "Curbside.h"
-
-  export *
-  module * { export * }
-}

@@ -1,0 +1,29 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'macOS-10.13'
+
+name: $(Date:yyyyMMdd)$(Rev:r)
+steps:
+- task: ShellScript@2
+  inputs:
+    scriptPath: build.sh
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: './'
+    Contents: '*-beta.nupkg'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/beta'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: './'
+    Contents: |
+      *.nupkg
+      !*beta*
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/release'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    ArtifactName: 'drop'
