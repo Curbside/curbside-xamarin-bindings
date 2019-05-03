@@ -24,20 +24,20 @@ sh build.sh
 ```
 
 ## Arrive SDK Prerequisite
-Register for an account at [Curbside Platform](https://dashboard.curbside.com). Sign in and do the following:
-* Generate a [usage token](https://dashboard.curbside.com/account?accessTab=tokens&accountTab=access)
-* Create a [site](https://dashboard.curbside.com/account?accountTab=sites)
+Register for an account at [Curbside Platform](https://merchantcloud.curbside.com). Sign in and do the following:
+* Generate a [usage token](https://merchantcloud.curbside.com/account?accessTab=tokens&accountTab=access)
+* Create a [site](https://merchantcloud.curbside.com/account?accountTab=sites)
 
 ## Running
 * Grant permission to use location services
 * Add a tracking identifier
 * Add a track token
-* Add a [site identifier](https://dashboard.curbside.com/account?accountTab=sites) that was created on the Curbside Platform.
+* Add a [site identifier](https://merchantcloud.curbside.com/account?accountTab=sites) that was created on the Curbside Platform.
 * Start track
 * Go on a test drive
 
 ## View User Trip
-* Check [ARRIVE dashboard](https://dashboard.curbside.com) to see your current location and to note that your status changed from In-Transit to Arrived.
+* Check [ARRIVE dashboard](https://merchantcloud.curbside.com) to see your current location and to note that your status changed from In-Transit to Arrived.
 * Use the monitor app to view detailed information about your arrival.
 
 ## Quick Start Guides
