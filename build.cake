@@ -50,9 +50,7 @@ Task("externals").Does(() =>
             Arguments = $"-s {source} {target}"
         });
 
-    CreateSymlink("A", "./Versions/Current");
-    CreateSymlink("Versions/Current/Headers", "Headers");
-    CreateSymlink("Versions/Current/Curbside", "Curbside");
+    CreateSymlink("/Headers", "Headers");
 });
 
 Task("libs").IsDependentOn("externals").Does(() => 
