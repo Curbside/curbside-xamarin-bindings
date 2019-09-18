@@ -8,7 +8,27 @@ using WebKit;
 namespace Curbside
 {
 
-	// @interface CSSession : NSObject
+    [Static]
+    partial interface Constants
+    {
+        // extern NSString *const CSTripTypeCarryOut;
+        [Field("CSTripTypeCarryOut", "__Internal")]
+        NSString CSTripTypeCarryOut { get; }
+
+        // extern NSString *const CSTripTypeDriveThru;
+        [Field("CSTripTypeDriveThru", "__Internal")]
+        NSString CSTripTypeDriveThru { get; }
+
+        // extern NSString *const CSTripTypeCurbside;
+        [Field("CSTripTypeCurbside", "__Internal")]
+        NSString CSTripTypeCurbside { get; }
+
+        // extern NSString *const CSTripTypeDineIn;
+        [Field("CSTripTypeDineIn", "__Internal")]
+        NSString CSTripTypeDineIn { get; }
+    }
+
+    // @interface CSSession : NSObject
     [Protocol]
 	[BaseType(typeof(NSObject))]
 	interface CSSession
@@ -62,7 +82,6 @@ namespace Curbside
 	}
  
 	// @interface CSSite : NSObject
-
     [Protocol]
 	[BaseType(typeof(NSObject))]
 	interface CSSite : INativeObject
@@ -135,12 +154,32 @@ namespace Curbside
 		[Export("startTripToSiteWithIdentifier:trackToken:")]
 		void StartTripToSiteWithIdentifier(string siteId, string trackToken);
 
+        // -(void)startUserOnTheirWayTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken;
+        [Export("startUserOnTheirWayTripToSiteWithIdentifier:trackToken:")]
+        void StartUserOnTheirWayTripToSiteWithIdentifier(string siteID, string trackToken);
+
         //- (void)startTripToSiteWithIdentifier:(NSString *)siteID trackToken:(NSString *)trackToken etaFromDate:(NSDate *)fromDate toDate:(nullable NSDate *)toDate;
         [Export("startTripToSiteWithIdentifier:trackToken:etaFromDate:toDate:")]
         void StartTripToSiteWithIdentifierWithEta(string siteId, string trackToken, NSDate fromDate, [NullAllowed]NSDate toDate);
 
+        // -(void)startTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken tripType:(NSString * _Nonnull)tripType;
+        [Export("startTripToSiteWithIdentifier:trackToken:tripType:")]
+        void StartTripToSiteWithIdentifier(string siteID, string trackToken, string tripType);
+
+        // -(void)startUserOnTheirWayTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken tripType:(NSString * _Nonnull)tripType;
+        [Export("startUserOnTheirWayTripToSiteWithIdentifier:trackToken:tripType:")]
+        void StartUserOnTheirWayTripToSiteWithIdentifier(string siteID, string trackToken, string tripType);
+
+        // -(void)startTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken etaFromDate:(NSDate * _Nonnull)fromDate toDate:(NSDate * _Nullable)toDate tripType:(NSString * _Nonnull)tripType;
+        [Export("startTripToSiteWithIdentifier:trackToken:etaFromDate:toDate:tripType:")]
+        void StartTripToSiteWithIdentifier(string siteID, string trackToken, NSDate fromDate, [NullAllowed] NSDate toDate, string tripType);
+
+        // -(void)updateAllTripsWithUserOnTheirWay:(BOOL)userOnTheirWay;
+        [Export("updateAllTripsWithUserOnTheirWay:")]
+        void UpdateAllTripsWithUserOnTheirWay(bool userOnTheirWay);
+
         // - (void) completeTripToSiteWithIdentifier:(NSString*) trackingIdentifier trackToken:(nullable NSString*>) trackToken;
-		[Export("completeTripToSiteWithIdentifier:trackToken:")]
+        [Export("completeTripToSiteWithIdentifier:trackToken:")]
 		void CompleteTripToSiteWithIdentifier(string siteId, string trackToken);
 
         // - (void) cancelTripToSiteWithIdentifier:(NSString*) trackingIdentifier trackToken:(nullable NSString*>) trackToken;
@@ -304,8 +343,6 @@ namespace Curbside
 		void CompleteTripForTrackingIdentifier(string trackingIdentifier, string[] trackTokens);
 	}
 
-
-
 	// typedef void (^CSUserLocationUpdatesAvailableHandler)(NSArray *);
     delegate void CSUserStatusUpdatesAvailableHandler(CSUserStatusUpdate[] updates);
 
@@ -321,7 +358,6 @@ namespace Curbside
     }
 
     // @interface CSSiteArrivalTracker : NSObject
-
     [Protocol]
     [BaseType(typeof(NSObject))]
 	interface CSSiteArrivalTracker
@@ -401,12 +437,12 @@ namespace Curbside
 		[Export("userStatus")]
 		CSUserStatus UserStatus { get; }
 
-		// @property (readonly, nonatomic) CSCustomerInfo * customerInfo;
-		[Export("customerInfo")]
-		CSUserInfo CustomerInfo { get; }
+        // @property (readonly, nonatomic) CSUserInfo * _Nullable userInfo;
+        [Export("userInfo")]
+        CSUserInfo UserInfo { get; }
 
-		// @property (readonly, nonatomic) BOOL acknowledgedUser;
-		[Export("acknowledgedUser")]
+        // @property (readonly, nonatomic) BOOL acknowledgedUser;
+        [Export("acknowledgedUser")]
 		bool AcknowledgedUser { get; }
 
 		// @property (readonly, nonatomic) int estimatedTimeOfArrival;
@@ -421,95 +457,18 @@ namespace Curbside
         [Export("tripInfos")]
         CSTripInfo[] TripInfos { get; }
 
-		// -(void)opsAcknowledgesUserWithMessage:(NSString *)ackMessage handler:(CSUserAcknowledgeStatus)acknowledgeStatusHandler;
-		[Export("opsAcknowledgesUserWithMessage:handler:")]
-		void OpsAcknowledgesUserWithMessage(string ackMessage, CSUserAcknowledgeStatus acknowledgeStatusHandler);
+        // -(void)monitoringSessionUserAcknowledgesUserWithMessage:(NSString * _Nonnull)ackMessage handler:(CSUserAcknowledgeStatus _Nonnull)acknowledgeStatusHandler;
+        [Export("monitoringSessionUserAcknowledgesUserWithMessage:handler:")]
+        void MonitoringSessionUserAcknowledgesUserWithMessage(string ackMessage, CSUserAcknowledgeStatus acknowledgeStatusHandler);
 
-		// @property (readonly, nonatomic) NSDate * opsAcknowledgedTimestamp;
-		[Export("opsAcknowledgedTimestamp")]
-		NSDate OpsAcknowledgedTimestamp { get; }
+        // @property (readonly, nonatomic) NSDate * _Nullable monitoringSessionUserAcknowledgedTimestamp;
+        [Export("monitoringSessionUserAcknowledgedTimestamp")]
+        NSDate MonitoringSessionUserAcknowledgedTimestamp { get; }
 
-		// @property (readonly, nonatomic) NSString * opsTrackingIdentifier;
-		[Export("opsTrackingIdentifier")]
-		string OpsTrackingIdentifier { get; }
-	}
-
-	// @interface CSWebView : UIWebView
-    [Protocol]
-	[BaseType(typeof(UIWebView))]
-	interface CSWebView
-	{
-		// @property (nonatomic, strong) NSString * oauthToken;
-		[Export("oauthToken", ArgumentSemantic.Strong)]
-		string OauthToken { get; set; }
-
-		[Wrap("WeakLoginDelegate")]
-		CSWebViewLoginDelegate LoginDelegate { get; set; }
-
-		// @property (assign, nonatomic) id<CSWebViewLoginDelegate> loginDelegate;
-		[NullAllowed, Export("loginDelegate", ArgumentSemantic.Assign)]
-		NSObject WeakLoginDelegate { get; set; }
-
-		[Wrap("WeakAnalyticsDelegate")]
-		CSWebViewAnalyticsDelegate AnalyticsDelegate { get; set; }
-
-		// @property (assign, nonatomic) id<CSWebViewAnalyticsDelegate> analyticsDelegate;
-		[NullAllowed, Export("analyticsDelegate", ArgumentSemantic.Assign)]
-		NSObject WeakAnalyticsDelegate { get; set; }
-
-		// @property (nonatomic, strong) NSDictionary * requestContext;
-		[Export("requestContext", ArgumentSemantic.Strong)]
-		NSDictionary RequestContext { get; set; }
-
-		// @property (nonatomic) BOOL developmentMode;
-		[Export("developmentMode")]
-		bool DevelopmentMode { get; set; }
-
-		// -(void)logout;
-		[Export("logout")]
-		void Logout();
-
-		// -(void)loadPage;
-		[Export("loadPage")]
-		void LoadPage();
-	}
-
-	// @protocol CSWebViewLoginDelegate <NSObject>
-	[Protocol, Model]
-	[BaseType(typeof(NSObject))]
-	interface CSWebViewLoginDelegate
-	{
-		// @required -(void)csWebViewNeedsOauthToken:(CSWebView *)webView;
-		[Abstract]
-		[Export("csWebViewNeedsOauthToken:")]
-		void CsWebViewNeedsOauthToken(CSWebView webView);
-
-		// @required -(void)csWebViewUserLoggedOut:(CSWebView *)webView;
-		[Abstract]
-		[Export("csWebViewUserLoggedOut:")]
-		void CsWebViewUserLoggedOut(CSWebView webView);
-
-		// @required -(void)csWebViewTokenValidationFailed:(CSWebView *)webView error:(id)errorCode;
-		[Abstract]
-		[Export("csWebViewTokenValidationFailed:error:")]
-		void CsWebViewTokenValidationFailed(CSWebView webView, NSObject errorCode);
-	}
-
-	// @protocol CSWebViewAnalyticsDelegate <NSObject>
-	[Protocol, Model]
-	[BaseType(typeof(NSObject))]
-	interface CSWebViewAnalyticsDelegate
-	{
-		// @required -(void)csWebView:(CSWebView *)csWebView taggedEvent:(NSString *)eventName properties:(NSDictionary *)eventProperties;
-		[Abstract]
-		[Export("csWebView:taggedEvent:properties:")]
-		void TaggedEvent(CSWebView csWebView, string eventName, NSDictionary eventProperties);
-
-		// @required -(void)csWebView:(CSWebView *)csWebView taggedScreen:(NSString *)screenName;
-		[Abstract]
-		[Export("csWebView:taggedScreen:")]
-		void TaggedScreen(CSWebView csWebView, string screenName);
-	}
+        // @property (readonly, nonatomic) NSString * _Nullable monitoringSessionUserTrackingIdentifier;
+        [Export("monitoringSessionUserTrackingIdentifier")]
+        string MonitoringSessionUserTrackingIdentifier { get; }
+    }
 
 	// @interface CSWKWebView : WKWebView
     [Protocol]
