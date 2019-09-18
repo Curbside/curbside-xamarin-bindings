@@ -41,17 +41,7 @@ Task("externals").Does(() =>
         "./tmp/curbside-ios.tar.gz");
     GZipUncompress("./tmp/curbside-ios.tar.gz", "./tmp/curbside-ios");
     CopyDirectory("./tmp/curbside-ios/Curbside/Curbside.framework", "./externals/Curbside.framework");
-
-    // create symlinks for iOS SDK
-    void CreateSymlink(string source, string target) =>
-        StartProcess("ln", new ProcessSettings
-        {
-            WorkingDirectory = new DirectoryPath("./externals/Curbside.framework"),
-            Arguments = $"-s {source} {target}"
-        });
-
-    CreateSymlink("Headers", "Headers");
-    CreateSymlink("Curbside", "Curbside");
+    
 });
 
 Task("libs").IsDependentOn("externals").Does(() => 
