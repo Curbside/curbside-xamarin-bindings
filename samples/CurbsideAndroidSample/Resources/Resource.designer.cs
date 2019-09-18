@@ -2703,6 +2703,9 @@ namespace CurbsideAndroidSample
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f06003b
+			public const int KEY_TRACKING_ID = 2131099707;
+			
 			// aapt resource value: 0x7f06001b
 			public const int abc_action_bar_home_description = 2131099675;
 			
@@ -2868,8 +2871,8 @@ namespace CurbsideAndroidSample
 			// aapt resource value: 0x7f060006
 			public const int google_storage_bucket = 2131099654;
 			
-			// aapt resource value: 0x7f06003b
-			public const int hello = 2131099707;
+			// aapt resource value: 0x7f06003e
+			public const int hello = 2131099710;
 			
 			// aapt resource value: 0x7f06003a
 			public const int library_name = 2131099706;
@@ -2879,6 +2882,9 @@ namespace CurbsideAndroidSample
 			
 			// aapt resource value: 0x7f060008
 			public const int place_autocomplete_search_hint = 2131099656;
+			
+			// aapt resource value: 0x7f06003d
+			public const int pref_api_host_key = 2131099709;
 			
 			// aapt resource value: 0x7f06002c
 			public const int search_menu_title = 2131099692;

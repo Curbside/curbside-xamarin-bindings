@@ -7,4 +7,4 @@ using Foundation;
 [assembly: AssemblyDescription("Binding for Curbside's iOS SDK")]
 [assembly: AssemblyCompany("Curbside")]
 [assembly: AssemblyCopyright("2019 Curbside")]
-[assembly: AssemblyVersion("3.27.0")]
+[assembly: AssemblyVersion("3.30.0")]
