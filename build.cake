@@ -6,14 +6,14 @@ using Cake.Common.Build.TeamCity.Data;
 var target = Argument("target", Argument ("t", "Default"));
 
 var buildNumber = EnvironmentVariable("BUILD_BUILDNUMBER") ?? "0";
-var nugetVersion = $"3.3.{buildNumber}";
+var nugetVersion = $"3.4.{buildNumber}";
 
 var externalVersions = new
 {
     RxAndroid = "1.2.1",
     RxJava = "1.1.6",
-    CurbsideIos = "3.30",
-    CurbsideAndroid = "3.2.4"
+    CurbsideIos = "3.31",
+    CurbsideAndroid = "3.3.0"
 };
 
 Task("externals").Does(() => 

@@ -13,29 +13,29 @@ namespace CurbsideiOSSample
 
 		public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
 		{
-            // TokyoJoe's Token
-            var sdkSession = CSUserSession.WithUsageToken("e445b0b497694445084e2c91624092529938d11fe91ad546bdee1b377d51b850", null);
+            // Rakuten Ready Demo Token
+            var sdkSession = CSUserSession.WithUsageToken("dfbe9fb7ad7c659ebd256626a325daca7c6045c8cd3d8d10fcc644b511d82d63", null);
             sdkSession.Application(application, launchOptions ?? new NSDictionary());
 
-            CSUserSession.CurrentSession.TrackingIdentifier = "test";
+            CSUserSession.CurrentSession.TrackingIdentifier = "hello12345";
 
             _curbsideTrackerDelegate.TrackerEncounteredError += OnTrackerEncounteredError;
             CSUserSession.CurrentSession.Delegate = _curbsideTrackerDelegate;
 
             CSUserInfo userInfo = new CSUserInfo()
             {
-                EmailAddress = "test@test.com",
-                FullName = "test",
-                SMSNumber = "66666666",
-                VehicleMake = "BMW", 
-                VehicleModel = "530",
-                VehicleLicensePlate = "JKL89"
+                EmailAddress = "john.smith@example.com",
+                FullName = "John Smith",
+                SMSNumber = "8883308304",
+                VehicleMake = "Tesla", 
+                VehicleModel = "Model S",
+                VehicleLicensePlate = "NAP789"
             };
             CSUserSession.CurrentSession.UserInfo = userInfo;
 
             Random generator = new Random();
             String r = generator.Next(0, 999999).ToString("D6");
-            CSUserSession.CurrentSession.StartTripToSiteWithIdentifier("tokyojoes_0", r);
+            CSUserSession.CurrentSession.StartTripToSiteWithIdentifier("rakutenreadydemo_100", r);
 
             CSUserSession.CurrentSession.UpdateTripsFromServer();
           

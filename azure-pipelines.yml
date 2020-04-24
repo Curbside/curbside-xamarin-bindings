@@ -2,7 +2,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macOS-10.13'
+  vmImage: 'macOS-10.15'
 
 name: $(Date:yyyyMMdd)$(Rev:r)
 steps:
