@@ -7,7 +7,7 @@
     <authors>Rakuten Ready</authors>
     <owners>Rakuten Ready</owners>
     <description>The Curbside ARRIVE SDK lets you build apps that produce reliable alerts when customers are approaching your sites. ARRIVE provides predictive alerts based on time to arrival that are more reliable than simpler solutions such as geofencing. Notifications can be sent to any in-store system, point-of-sale or in-store device via webhooks or by using the SDK for on-premise native applications. ARRIVE dashboard is a dashboard showing your sites, the average wait times out front, and other mission critical customer activity.</description>
-    <copyright>Copyright © Rakuten Ready</copyright>
+    <copyright>Copyright © Curbside</copyright>
     <projectUrl>https://developer.rakutenready.com/en/docs/</projectUrl>
     <licenseUrl>https://developer.rakutenready.com/en/license/</licenseUrl>
     <iconUrl>https://rakutenready.com/wp-content/uploads/2020/04/RR-V-400x400-1.png</iconUrl>
