@@ -6,5 +6,5 @@ using Foundation;
 [assembly: AssemblyTitle("Curbside.Xamarin.iOS")]
 [assembly: AssemblyDescription("Binding for Curbside's iOS SDK")]
 [assembly: AssemblyCompany("Curbside")]
-[assembly: AssemblyCopyright("2019 Curbside")]
-[assembly: AssemblyVersion("3.30.0")]
+[assembly: AssemblyCopyright("2020 Curbside")]
+[assembly: AssemblyVersion("3.31.0")]

@@ -5,11 +5,8 @@ using Android.Support.V7.App;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using System.Linq;
-using Firebase;
-using Curbside;
 using System;
 using Android.Gms.Common;
-using Firebase.Messaging;
 using Firebase.Iid;
 using Android.Util;
 
@@ -17,7 +14,7 @@ using Android.Util;
 
 namespace CurbsideAndroidSample
 {
-	[Activity(Label = "CurbsideAndroidSample", MainLauncher = true, Icon = "@mipmap/icon")]
+    [Activity(Label = "CurbsideAndroidSample", MainLauncher = true, Icon = "@mipmap/icon")]
 	public class MainActivity : AppCompatActivity
 	{
         static readonly string TAG = "MainActivity";
@@ -61,11 +58,10 @@ namespace CurbsideAndroidSample
 				ActivityCompat.RequestPermissions(this, permissions, PERMISSION_REQUEST_CODE);
 			}
 
-            // TokyoJoe's Token
-            Curbside.CSUserSession.Init(this, new Curbside.TokenCurbsideCredentialProvider("e445b0b497694445084e2c91624092529938d11fe91ad546bdee1b377d51b850"));
-
-			Curbside.CSUserSession.Instance.RegisterTrackingIdentifier("test");
-            Curbside.CSUserInfo userInfo = new Curbside.CSUserInfo("test", "test@test.com", "55555555", "NAP789", "Tesla", "S");
+            // Rakuten Ready Demo Token
+            Curbside.CSUserSession.Init(this, new Curbside.TokenCurbsideCredentialProvider("dfbe9fb7ad7c659ebd256626a325daca7c6045c8cd3d8d10fcc644b511d82d63"));
+			Curbside.CSUserSession.Instance.RegisterTrackingIdentifier("hello12345");
+            Curbside.CSUserInfo userInfo = new Curbside.CSUserInfo("John Smith", "john.smith@example.com", "8883308304", "NAP789", "Tesla", "Model S");
             Curbside.CSUserSession.Instance.SetUserInfo(userInfo);
            
             Random generator = new Random();
@@ -74,7 +70,7 @@ namespace CurbsideAndroidSample
             {
                 Curbside.CSUserSession.Instance.SetNotificationForForegroundService(notification);
             }
-            Curbside.CSUserSession.Instance.StartTripToSiteWithIdentifier("tokyojoes_0", r);
+            Curbside.CSUserSession.Instance.StartTripToSiteWithIdentifier("rakutenreadydemo_100", r);
         }
 
 		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
@@ -130,7 +126,7 @@ namespace CurbsideAndroidSample
             var notificationManager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
             notificationManager.CreateNotificationChannel(channel);
             return new Notification.Builder(this,CHANNEL_ID)
-            .SetContentTitle("com.olo.curbsidetest")
+            .SetContentTitle("com.curbside.test")
             .SetContentText("Notification Object for Foreground Service")
             .SetSmallIcon(Resource.Drawable.notification_bg_low)
             .SetOngoing(true)

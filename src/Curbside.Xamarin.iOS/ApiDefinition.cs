@@ -33,12 +33,13 @@ namespace Curbside
 	[BaseType(typeof(NSObject))]
 	interface CSSession
 	{
-		// @property (nonatomic, strong) NSString * trackingIdentifier;
-		[Export("trackingIdentifier", ArgumentSemantic.Strong)]
+		
+        // @property (nonatomic, strong) NSString * trackingIdentifier;
+		[NullAllowed, Export("trackingIdentifier", ArgumentSemantic.Strong)]
 		string TrackingIdentifier { get; set; }
 
 		// @property (nonatomic, strong) CSUserInfo * userInfo;
-        [Export("userInfo", ArgumentSemantic.Strong)]
+		[Export("userInfo", ArgumentSemantic.Strong)]
         CSUserInfo UserInfo { get; set; }
 
         // @property (readonly, nonatomic) CSSessionState sessionState;
