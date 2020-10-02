@@ -26,14 +26,17 @@ namespace Curbside
         // extern NSString *const CSTripTypeDineIn;
         [Field("CSTripTypeDineIn", "__Internal")]
         NSString CSTripTypeDineIn { get; }
+
+		// extern NSString * _Nonnull kCSUserSessionReadyNotificationName;
+		[Field ("kCSUserSessionReadyNotificationName", "__Internal")]
+		NSString kCSUserSessionReadyNotificationName { get; }
     }
 
     // @interface CSSession : NSObject
     [Protocol]
 	[BaseType(typeof(NSObject))]
 	interface CSSession
-	{
-		
+	{	
         // @property (nonatomic, strong) NSString * trackingIdentifier;
 		[NullAllowed, Export("trackingIdentifier", ArgumentSemantic.Strong)]
 		string TrackingIdentifier { get; set; }
@@ -47,30 +50,21 @@ namespace Curbside
 		CSSessionState SessionState { get; }
 
 		[Wrap("WeakDelegate")]
+		[NullAllowed]
 		CSSessionDelegate Delegate { get; set; }
 
 		// @property (nonatomic, strong) id<CSSessionDelegate> delegate;
 		[NullAllowed, Export("delegate", ArgumentSemantic.Strong)]
 		NSObject WeakDelegate { get; set; }
 
-		// -(void)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
-		[Export("application:didFinishLaunchingWithOptions:")]
-		void Application(UIApplication application, NSDictionary launchOptions);
-        
-		// -(BOOL)addEvent:(CSEvent)event forTrackToken:(NSString *)trackToken siteIdentifier:(NSString *)siteIdentifier properties:(NSDictionary *)properties;
-		[Export("addEvent:forTrackToken:siteIdentifier:properties:")]
-		bool AddEvent(CSEvent @event, string trackToken, string siteIdentifier, NSDictionary properties);
-	}
+		// -(void)application:(UIApplication * _Nonnull)application didFinishLaunchingWithOptions:(NSDictionary * _Nullable)launchOptions;
+		[Export ("application:didFinishLaunchingWithOptions:")]
+		void Application (UIApplication application, [NullAllowed] NSDictionary launchOptions);
 
-    [Protocol, Model]
-    [BaseType(typeof(CSSessionDelegate))]
-    interface CSMonitoringSessionDelegate
-	{
-		[Export("encounteredError:")]
-		void EncounteredError(NSError error);
+		// -(BOOL)addEvent:(CSEvent)event forTrackToken:(NSString * _Nullable)trackToken siteIdentifier:(NSString * _Nullable)siteIdentifier properties:(NSDictionary * _Nullable)properties;
+		[Export ("addEvent:forTrackToken:siteIdentifier:properties:")]
+		bool AddEvent (CSEvent @event, [NullAllowed] string trackToken, [NullAllowed] string siteIdentifier, [NullAllowed] NSDictionary properties);
 	}
-
-	interface ICSSessionDelegate { }
 
 	// @protocol CSSessionDelegate <NSObject>
 	[Protocol, Model]
@@ -94,6 +88,10 @@ namespace Curbside
 		// -(id)initWithSiteIdentifier:(NSString *)siteIdentifier;
 		[Export("initWithSiteIdentifier:")]
 		IntPtr Constructor(string siteIdentifier);
+
+		// @property (readonly, nonatomic) NSArray<CSTripInfo *> * _Nullable tripInfos;
+		[NullAllowed, Export ("tripInfos")]
+		CSTripInfo[] TripInfos { get; }	
 	}
 
 	// @interface CSUserSite : CSSite
@@ -101,10 +99,6 @@ namespace Curbside
 	[BaseType(typeof(CSSite))]
 	interface CSUserSite
 	{
-		// @property (readonly, nonatomic) NSArray * trackTokens;
-		[Export("trackTokens")]
-		string[] TrackTokens { get; }
-
 		// @property (readonly, nonatomic) CSUserStatus userStatus;
 		[Export("userStatus")]
 		CSUserStatus UserStatus { get; }
@@ -113,126 +107,128 @@ namespace Curbside
 		[Export("distanceFromSite")]
 		int DistanceFromSite { get; }
 
-		// -(id)initWithSiteIdentifier:(NSString *)siteIdentifier trackTokens:(NSArray *)trackTokens;
-		[Export("initWithSiteIdentifier:trackTokens:")]
-		IntPtr Constructor(string siteIdentifier, string[] trackTokens);
+		// @property (readonly, nonatomic) int estimatedTimeOfArrival;
+		[Export ("estimatedTimeOfArrival")]
+		int EstimatedTimeOfArrival { get; }
+
 	}
        
 	// @interface CSUserSession : CSSession
 	[BaseType(typeof(CSSession))]
-    interface CSUserSession: CSSession
+    interface CSUserSession
 	{
-		// @property (readonly, nonatomic) NSSet * trackedSites;
-		[Export("trackedSites")]
-		NSSet<CSSite> TrackedSites { get; } //
+		// @property (readonly, nonatomic) NSSet<CSSite *> * _Nonnull sitesToNotifyMonitoringSessionUserOfArrival;
+		[Export ("sitesToNotifyMonitoringSessionUserOfArrival")]
+		NSSet<CSSite> SitesToNotifyMonitoringSessionUserOfArrival { get; }
 
-		[Wrap("WeakDelegate")]
-		new CSUserSessionDelegate Delegate { get; set; }
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		CSUserSessionDelegate Delegate { get; set; }
 
-		// @property (readonly, nonatomic) CSSite * sitesToNotifyMonitoringSessionUserOfArrival;
-		[Export("sitesToNotifyMonitoringSessionUserOfArrival")]
-		NSSet<CSSite> SitesToNotifyMonitoringSessionUserOfArrival { get; } 
-      
-        // +(instancetype)createSessionWithUsageToken:(NSString *)usageToken delegate:(id<CSMobileSessionDelegate>)delegate;
-        [Static]
-        [Export("createSessionWithUsageToken:delegate:")]
-		CSUserSession WithUsageToken(string usageToken, [NullAllowed]ICSUserSessionDelegate @delegate); 
-
-        // +(instancetype)currentSession;
-        [Static]
-        [Export("currentSession")]
-        CSUserSession CurrentSession { get; } //
-
-		// @property (assign, nonatomic) id<CSUserSessionDelegate> delegate;
-		[NullAllowed, Export("delegate", ArgumentSemantic.Assign)]
+		// @property (nonatomic, strong) id<CSUserSessionDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Strong)]
 		new NSObject WeakDelegate { get; set; }
 
-		// -(void)updateTripsFromServer;
-		[Export("updateTripsFromServer")]
-		void UpdateTripsFromServer();
+		// @property (readonly, nonatomic) NSSet<CSSite *> * _Nonnull trackedSites;
+		[Export ("trackedSites")]
+		NSSet<CSSite> TrackedSites { get; }
 
-        // - (void) startTripToSiteWithIdentifier:(NSString*) trackingIdentifier trackToken:(nullable NSString*>) trackToken;
-		[Export("startTripToSiteWithIdentifier:trackToken:")]
-		void StartTripToSiteWithIdentifier(string siteId, string trackToken);
+		// +(instancetype _Nonnull)createSessionWithUsageToken:(NSString * _Nonnull)usageToken delegate:(id<CSUserSessionDelegate> _Nullable)delegate;
+		[Static]
+		[Export ("createSessionWithUsageToken:delegate:")]
+		CSUserSession createSessionWithUsageToken (string usageToken, [NullAllowed] CSUserSessionDelegate @delegate);
 
-        // -(void)startUserOnTheirWayTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken;
-        [Export("startUserOnTheirWayTripToSiteWithIdentifier:trackToken:")]
-        void StartUserOnTheirWayTripToSiteWithIdentifier(string siteID, string trackToken);
+		// +(instancetype _Nonnull)currentSession;
+		[Static]
+		[Export ("currentSession")]
+		CSUserSession CurrentSession { get; }
 
-        //- (void)startTripToSiteWithIdentifier:(NSString *)siteID trackToken:(NSString *)trackToken etaFromDate:(NSDate *)fromDate toDate:(nullable NSDate *)toDate;
-        [Export("startTripToSiteWithIdentifier:trackToken:etaFromDate:toDate:")]
-        void StartTripToSiteWithIdentifierWithEta(string siteId, string trackToken, NSDate fromDate, [NullAllowed]NSDate toDate);
+		// -(void)notifyMonitoringSessionUserOfArrivalAtSite:(CSSite * _Nonnull)site;
+		[Export ("notifyMonitoringSessionUserOfArrivalAtSite:")]
+		void NotifyMonitoringSessionUserOfArrivalAtSite (CSSite site);
 
-        // -(void)startTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken tripType:(NSString * _Nonnull)tripType;
-        [Export("startTripToSiteWithIdentifier:trackToken:tripType:")]
-        void StartTripToSiteWithIdentifier(string siteID, string trackToken, string tripType);
+		// -(void)startTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken;
+		[Export ("startTripToSiteWithIdentifier:trackToken:")]
+		void StartTripToSiteWithIdentifier (string siteID, string trackToken);
 
-        // -(void)startUserOnTheirWayTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken tripType:(NSString * _Nonnull)tripType;
-        [Export("startUserOnTheirWayTripToSiteWithIdentifier:trackToken:tripType:")]
-        void StartUserOnTheirWayTripToSiteWithIdentifier(string siteID, string trackToken, string tripType);
+		// -(void)startUserOnTheirWayTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken;
+		[Export ("startUserOnTheirWayTripToSiteWithIdentifier:trackToken:")]
+		void StartUserOnTheirWayTripToSiteWithIdentifier (string siteID, string trackToken);
 
-        // -(void)startTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken etaFromDate:(NSDate * _Nonnull)fromDate toDate:(NSDate * _Nullable)toDate tripType:(NSString * _Nonnull)tripType;
-        [Export("startTripToSiteWithIdentifier:trackToken:etaFromDate:toDate:tripType:")]
-        void StartTripToSiteWithIdentifier(string siteID, string trackToken, NSDate fromDate, [NullAllowed] NSDate toDate, string tripType);
+		// -(void)startTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken etaFromDate:(NSDate * _Nonnull)fromDate toDate:(NSDate * _Nullable)toDate;
+		[Export ("startTripToSiteWithIdentifier:trackToken:etaFromDate:toDate:")]
+		void StartTripToSiteWithIdentifier (string siteID, string trackToken, NSDate fromDate, [NullAllowed] NSDate toDate);
 
-        // -(void)updateAllTripsWithUserOnTheirWay:(BOOL)userOnTheirWay;
-        [Export("updateAllTripsWithUserOnTheirWay:")]
-        void UpdateAllTripsWithUserOnTheirWay(bool userOnTheirWay);
+		// -(void)startTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken tripType:(NSString * _Nonnull)tripType;
+		[Export ("startTripToSiteWithIdentifier:trackToken:tripType:")]
+		void StartTripToSiteWithIdentifier (string siteID, string trackToken, string tripType);
 
-        // - (void) completeTripToSiteWithIdentifier:(NSString*) trackingIdentifier trackToken:(nullable NSString*>) trackToken;
-        [Export("completeTripToSiteWithIdentifier:trackToken:")]
-		void CompleteTripToSiteWithIdentifier(string siteId, string trackToken);
+		// -(void)startUserOnTheirWayTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken tripType:(NSString * _Nonnull)tripType;
+		[Export ("startUserOnTheirWayTripToSiteWithIdentifier:trackToken:tripType:")]
+		void StartUserOnTheirWayTripToSiteWithIdentifier (string siteID, string trackToken, string tripType);
 
-        // - (void) cancelTripToSiteWithIdentifier:(NSString*) trackingIdentifier trackToken:(nullable NSString*>) trackToken;
-		[Export("cancelTripToSiteWithIdentifier:trackToken:")]
-        void CancelTripToSiteWithIdentifier(string siteId, string trackToken);
+		// -(void)startTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nonnull)trackToken etaFromDate:(NSDate * _Nonnull)fromDate toDate:(NSDate * _Nullable)toDate tripType:(NSString * _Nonnull)tripType;
+		[Export ("startTripToSiteWithIdentifier:trackToken:etaFromDate:toDate:tripType:")]
+		void StartTripToSiteWithIdentifier (string siteID, string trackToken, NSDate fromDate, [NullAllowed] NSDate toDate, string tripType);
 
-        // -(void)completeAllTrips;
-        [Export("completeAllTrips")]
-		void CompleteAllTrips();
+		// -(void)updateAllTripsWithUserOnTheirWay:(BOOL)userOnTheirWay;
+		[Export ("updateAllTripsWithUserOnTheirWay:")]
+		void UpdateAllTripsWithUserOnTheirWay (bool userOnTheirWay);
+
+		// -(void)completeTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nullable)trackToken;
+		[Export ("completeTripToSiteWithIdentifier:trackToken:")]
+		void CompleteTripToSiteWithIdentifier (string siteID, [NullAllowed] string trackToken);
+
+		// -(void)completeAllTrips;
+		[Export ("completeAllTrips")]
+		void CompleteAllTrips ();
+
+		// -(void)cancelTripToSiteWithIdentifier:(NSString * _Nonnull)siteID trackToken:(NSString * _Nullable)trackToken;
+		[Export ("cancelTripToSiteWithIdentifier:trackToken:")]
+		void CancelTripToSiteWithIdentifier (string siteID, [NullAllowed] string trackToken);
 
 		// -(void)cancelAllTrips;
-		[Export("cancelAllTrips")]
-        void CancelAllTrips();
+		[Export ("cancelAllTrips")]
+		void CancelAllTrips ();
 
-		//[[CSUserSession currentSession] notifyMonitoringSessionUserOfArrivalAtSite:site];
-		// -(void)notifyMonitoringSessionUserOfArrivalAtSite:(CSSite *)site;
-		[Export("notifyMonitoringSessionUserOfArrivalAtSite:")]
-		void NotifyMonitoringSessionUserOfArrivalAtSite(CSSite site);
+		// -(void)updateTripsFromServer;
+		[Export ("updateTripsFromServer")]
+		void UpdateTripsFromServer ();
 
-        // (void)etaToSiteWithIdentifier:(nonnull NSString *)siteID fromLocation:(nonnull CLLocation *)fromLocation transportationMode:(CSTransportationMode) transportationMode completionHandler:(nonnull void (^)(int))completionHandler
-        [Export("etaToSiteWithIdentifier:fromLocation:transportationMode:completionHandler:")]
-        void EtaToSiteWithIdentifier(string siteId, CLLocationManager fromLocation, CSTransportationMode transportationMode, Action<int> completionHandler);
-    }
+		// -(void)etaToSiteWithIdentifier:(NSString * _Nonnull)siteID fromLocation:(CLLocation * _Nonnull)fromLocation transportationMode:(CSTransportationMode)transportationMode completionHandler:(void (^ _Nonnull)(int))completionHandler;
+		[Export ("etaToSiteWithIdentifier:fromLocation:transportationMode:completionHandler:")]
+		void EtaToSiteWithIdentifier (string siteID, CLLocation fromLocation, CSTransportationMode transportationMode, Action<int> completionHandler);
+	}
 
 	// @protocol CSUserSessionDelegate <CSSessionDelegate>
 	[Protocol, Model]
 	[BaseType(typeof(CSSessionDelegate))]
 	interface CSUserSessionDelegate
 	{
-		// @optional -(void)tracker:(CSTracker *)tracker userApproachingSite:(CSUserSite *)site;
-        [Export("session:userApproachingSite:")]
-        void UserApproachingSite(CSUserSession session, CSUserSite site);
+		// @optional -(void)session:(CSUserSession * _Nonnull)session canNotifyMonitoringSessionUserAtSite:(CSSite * _Nonnull)site;
+		[Export ("session:canNotifyMonitoringSessionUserAtSite:")]
+		void CanNotifyMonitoringSessionUserAtSite (CSUserSession session, CSSite site);
 
-		// @optional -(void)tracker:(CSTracker *)tracker userArrivedAtSite:(CSUserSite *)site;
-        [Export("session:userArrivedAtSite:")]
-        void UserArrivedAtSite(CSUserSession session, CSUserSite site);
+		// @optional -(void)session:(CSUserSession * _Nonnull)session userApproachingSite:(CSSite * _Nonnull)site;
+		[Export ("session:userApproachingSite:")]
+		void UserApproachingSite (CSUserSession session, CSSite site);
 
-        // @optional - (void)tracker:(CSTracker*) tracker encounteredError:(NSError*) error forOperation:(CSTrackerAction) trackerAction;
-        [Export("session:encounteredError:forOperation:")]
-        void EncounteredError(CSUserSession session, NSError error, CSUserSessionAction trackerAction);
+		// @optional -(void)session:(CSUserSession * _Nonnull)session userArrivedAtSite:(CSSite * _Nonnull)site;
+		[Export ("session:userArrivedAtSite:")]
+		void UserArrivedAtSite (CSUserSession session, CSSite site);
 
-        //- (void)session:(CSUserSession *)session updatedTrackedSites:(NSSet<CSSite *> *)trackedSites;
-        [Export("session:updatedTrackedSites:")]
-        void UpdatedTrackedSites(CSSession session, NSSet<CSSite> trackedSites);
+		// @optional -(void)session:(CSUserSession * _Nonnull)session encounteredError:(NSError * _Nonnull)error forOperation:(CSUserSessionAction)customerSessionAction;
+		[Export ("session:encounteredError:forOperation:")]
+		void EncounteredError (CSUserSession session, NSError error, CSUserSessionAction customerSessionAction);
 
-        // @optional -(void)session:(CSMobileSession *)session canNotifyAssociateAtSite:(CSSite *)site;
-        [Export("session:canNotifyAssociateAtSite:")]
-        void CanNotifyAssociateAtSite(CSUserSession session, CSUserSite site);
+		// @optional -(void)session:(CSUserSession * _Nonnull)session updatedTrackedSites:(NSSet<CSSite *> * _Nonnull)trackedSites;
+		[Export ("session:updatedTrackedSites:")]
+		void UpdatedTrackedSites (CSUserSession session, NSSet<CSSite> trackedSites);
 
-        // -(void)session:(nonnull CSUserSession *)session tripStartedForSite:(nonnull CSSite *)site;
-        [Export("session:tripStartedForSite:")]
-        void TripStartedForSite(CSUserSession session, CSSite site);
+		// @optional -(void)session:(CSUserSession * _Nonnull)session tripStartedForSite:(CSSite * _Nonnull)site;
+		[Export ("session:tripStartedForSite:")]
+		void TripStartedForSite (CSUserSession session, CSSite site);
+		
     }
 
     interface ICSUserSessionDelegate { }
@@ -266,136 +262,89 @@ namespace Curbside
         string VehicleLicensePlate { get; set; }
 	}
 
-	// @interface CSSiteOpsNotification : NSObject
-    [Protocol]
-	[BaseType(typeof(NSObject))]
-	interface CSSiteOpsNotification
+	// @interface CSMonitoringNotification : NSObject
+	[BaseType (typeof(NSObject))]
+	interface CSMonitoringNotification
 	{
-		// @property (readonly, nonatomic) BOOL opsAcknowledged;
-		[Export("opsAcknowledged")]
-		bool OpsAcknowledged { get; }
-        
-		// @property (readonly, nonatomic) NSDate * opsAcknowledgeTimestamp;
-		[Export("opsAcknowledgeTimestamp")]
-		NSDate OpsAcknowledgeTimestamp { get; }
+		// @property (readonly, nonatomic) BOOL monitoringSessionUserAcknowledged;
+		[Export ("monitoringSessionUserAcknowledged")]
+		bool MonitoringSessionUserAcknowledged { get; }
 
-		// @property (readonly, nonatomic) int opsEstimatedTimeOfArrival;
-		[Export("opsEstimatedTimeOfArrival")]
-		int OpsEstimatedTimeOfArrival { get; }
-        
-		// @property (readonly, nonatomic) NSString * opsMessage;
-		[Export("opsMessage")]
-		string OpsMessage { get; }
+		// @property (readonly, nonatomic) NSDate * _Nullable monitoringSessionUserAcknowledgeTimestamp;
+		[NullAllowed, Export ("monitoringSessionUserAcknowledgeTimestamp")]
+		NSDate MonitoringSessionUserAcknowledgeTimestamp { get; }
+
+		// @property (readonly, nonatomic) int monitoringSessionUserEstimatedTimeOfArrival;
+		[Export ("monitoringSessionUserEstimatedTimeOfArrival")]
+		int MonitoringSessionUserEstimatedTimeOfArrival { get; }
+
+		// @property (readonly, nonatomic) NSString * _Nullable monitoringSessionUserMessage;
+		[NullAllowed, Export ("monitoringSessionUserMessage")]
+		string MonitoringSessionUserMessage { get; }
 	}
 
-	// @interface CSMonitoringSession : CSSession
+	// typedef void (^CSUserStatusesUpdatedHandler)(NSArray<CSUserStatusUpdate *> * _Nonnull);
+	delegate void CSUserStatusesUpdatedHandler (CSUserStatusUpdate[] arg0);
 
+	[Protocol, Model]
+    [BaseType(typeof(CSSessionDelegate))]
+    interface CSMonitoringSessionDelegate
+	{
+		// @required -(void)session:(CSMonitoringSession * _Nonnull)session encounteredError:(NSError * _Nonnull)error;
+		[Export ("session:encounteredError:")]
+		void EncounteredError (CSMonitoringSession session, NSError error);
+	}
+
+	interface ICSSessionDelegate { }
+
+	// @interface CSMonitoringSession : CSSession
     [Protocol]
 	[BaseType(typeof(CSSession))]
 	interface CSMonitoringSession
 	{
-		// +(instancetype)createSessionWithAPIKey:(NSString *)apiKey secret:(NSString *)secret delegate:(id<CSSessionDelegate>)delegate;
-		[Static]
-		[Export("createSessionWithAPIKey:secret:delegate:")]
-		CSMonitoringSession CreateSessionWithAPIKey(string apiKey, string secret, CSMonitoringSessionDelegate @delegate);
-
-		// +(instancetype)currentSession;
-		[Static]
-		[Export("currentSession")]
-		CSMonitoringSession CurrentSession { get; }
-		// @property (readonly, nonatomic) CSSite * arrivalSite;
-        [Export("arrivalSite")]
-        CSSite ArrivalSite { get; }
-
-        // @property (copy, nonatomic) CSUserLocationUpdatesAvailableHandler statusesUpdatedHandler;
-        [Export("statusesUpdatedHandler", ArgumentSemantic.Copy)]
-        CSUserStatusUpdatesAvailableHandler StatusesUpdatedHandler { get; set; }
-
-        [Wrap("WeakDelegate")]
-		CSMonitoringSessionDelegate Delegate { get; set; }
-
-        // @property (nonatomic, assign) CSSiteArrivalTrackerDelegate delegate;
-        [NullAllowed, Export("delegate", ArgumentSemantic.Assign)]
-        NSObject WeakDelegate { get; set; }
-
-        // +(instancetype)sharedArrivalTracker;
-        [Static]
-        [Export("sharedArrivalTracker")]
-		CSMonitoringSession SharedArrivalTracker();
-
-        // -(void)stopTrackingArrivals;
-        [Export("stopTrackingArrivals")]
-        void StopTrackingArrivals();
-
-        // - (void) stopTrackingArrivalForTrackingIdentifier:(NSString*) trackingIdentifier trackTokens:(nullable NSArray<NSString*> *)trackTokens;
-        [Export("stopTrackingArrivalForTrackingIdentifier:trackTokens:")]
-        void StopTrackingArrivalForTrackingIdentifier(string trackingIdentifier, string[] trackTokens);
-
-        // - (void) cancelTrackingArrivalForTrackingIdentifier:(NSString*) trackingIdentifier trackTokens:(nullable NSArray<NSString*> *)trackTokens;
-        [Export("cancelTrackingArrivalForTrackingIdentifier:trackTokens:")]
-        void CancelTrackingArrivalForTrackingIdentifier(string trackingIdentifier, string[] trackTokens);
-        
-		// - (void) startMonitoringArrivalsToSiteWithIdentifier:(NSString*) siteId;
-		[Export("startMonitoringArrivalsToSiteWithIdentifier:")]
-		void StartMonitoringArrivalsToSiteWithIdentifier(string siteId);
-
-		// - (void) completeTripForTrackingIdentifier:(NSString*) trackingIdentifier trackTokens:(nullable NSArray<NSString*> *)trackTokens;
-		[Export("completeTripForTrackingIdentifier:trackTokens:")]
-		void CompleteTripForTrackingIdentifier(string trackingIdentifier, string[] trackTokens);
-	}
-
-	// typedef void (^CSUserLocationUpdatesAvailableHandler)(NSArray *);
-    delegate void CSUserStatusUpdatesAvailableHandler(CSUserStatusUpdate[] updates);
-
-    // @protocol CSSiteArrivalTrackerDelegate <NSObject>
-    [Protocol, Model]
-    [BaseType(typeof(NSObject))]
-    interface CSSiteArrivalTrackerDelegate
-    {
-        // @required -(void)siteArrivalTracker:(CSSiteArrivalTracker*) tracker encounteredError:(NSError*) error;
-        [Abstract]
-        [Export("siteArrivalTracker:encounteredError:")]
-        void SiteArrivalTracker(CSSiteArrivalTracker tracker, NSError error);
-    }
-
-    // @interface CSSiteArrivalTracker : NSObject
-    [Protocol]
-    [BaseType(typeof(NSObject))]
-	interface CSSiteArrivalTracker
-	{
-		// @property (readonly, nonatomic) CSSite * arrivalSite;
-		[Export("arrivalSite")]
+		// @property (readonly, nonatomic) CSSite * _Nullable arrivalSite;
+		[NullAllowed, Export ("arrivalSite")]
 		CSSite ArrivalSite { get; }
 
-        // @property (copy, nonatomic) CSUserLocationUpdatesAvailableHandler locationUpdateHandler;
-		[Export("locationUpdateHandler", ArgumentSemantic.Copy)]
-		CSUserStatusUpdatesAvailableHandler LocationUpdateHandler { get; set; }
+		// @property (copy, nonatomic) CSUserStatusesUpdatedHandler _Nullable statusesUpdatedHandler;
+		[NullAllowed, Export ("statusesUpdatedHandler", ArgumentSemantic.Copy)]
+		CSUserStatusesUpdatedHandler StatusesUpdatedHandler { get; set; }
 
-        [Wrap("WeakDelegate")]
-        CSSiteArrivalTrackerDelegate Delegate { get; set; }
+		[Wrap ("WeakDelegate")]
+		[NullAllowed]
+		CSMonitoringSessionDelegate Delegate { get; set; }
 
-        // @property (nonatomic, assign) CSSiteArrivalTrackerDelegate delegate;
-        [NullAllowed, Export("delegate", ArgumentSemantic.Assign)]
-        NSObject WeakDelegate { get; set; }
+		// @property (nonatomic, strong) id<CSMonitoringSessionDelegate> _Nullable delegate;
+		[NullAllowed, Export ("delegate", ArgumentSemantic.Strong)]
+		NSObject WeakDelegate { get; set; }
 
-        // +(instancetype)sharedArrivalTracker;
-        [Static]
-		[Export("sharedArrivalTracker")]
-		CSSiteArrivalTracker SharedArrivalTracker();
+		// +(instancetype _Nonnull)createSessionWithAPIKey:(NSString * _Nonnull)apiKey secret:(NSString * _Nonnull)secret delegate:(id<CSMonitoringSessionDelegate> _Nullable)delegate;
+		[Static]
+		[Export ("createSessionWithAPIKey:secret:delegate:")]
+		CSMonitoringSession CreateSessionWithAPIKey (string apiKey, string secret, [NullAllowed] CSMonitoringSessionDelegate @delegate);
 
-        // -(void)stopTrackingArrivals;
-        [Export("stopTrackingArrivals")]
-        void StopTrackingArrivals();
+		// +(instancetype _Nonnull)currentSession;
+		[Static]
+		[Export ("currentSession")]
+		CSMonitoringSession CurrentSession ();
 
-        // - (void) stopTrackingArrivalForTrackingIdentifier:(NSString*) trackingIdentifier trackTokens:(nullable NSArray<NSString*> *)trackTokens;
-        [Export("stopTrackingArrivalForTrackingIdentifier:trackTokens:")]
-        void StopTrackingArrivalForTrackingIdentifier(string trackingIdentifier, string[] trackTokens);
+		// -(void)startMonitoringArrivalsToSiteWithIdentifier:(NSString * _Nonnull)siteID;
+		[Export ("startMonitoringArrivalsToSiteWithIdentifier:")]
+		void StartMonitoringArrivalsToSiteWithIdentifier (string siteID);
 
-        // - (void) cancelTrackingArrivalForTrackingIdentifier:(NSString*) trackingIdentifier trackTokens:(nullable NSArray<NSString*> *)trackTokens;
-        [Export("cancelTrackingArrivalForTrackingIdentifier:trackTokens:")]
-        void CancelTrackingArrivalForTrackingIdentifier(string trackingIdentifier, string[] trackTokens);
+		// -(void)stopMonitoringArrivals;
+		[Export ("stopMonitoringArrivals")]
+		void StopMonitoringArrivals ();
+
+		// -(void)completeTripForTrackingIdentifier:(NSString * _Nonnull)trackingIdentifier trackTokens:(NSArray<NSString *> * _Nullable)trackTokens;
+		[Export ("completeTripForTrackingIdentifier:trackTokens:")]
+		void CompleteTripForTrackingIdentifier (string trackingIdentifier, [NullAllowed] string[] trackTokens);
+
+		// -(void)cancelTripForTrackingIdentifier:(NSString * _Nonnull)trackingIdentifier trackTokens:(NSArray<NSString *> * _Nullable)trackTokens;
+		[Export ("cancelTripForTrackingIdentifier:trackTokens:")]
+		void CancelTripForTrackingIdentifier (string trackingIdentifier, [NullAllowed] string[] trackTokens);
 	}
-
+	
     // @interface CSTripInfo : NSObject
     [Protocol]
     [BaseType(typeof(NSObject))]
@@ -412,12 +361,20 @@ namespace Curbside
         // @property(nonatomic, readonly)NSString* destID;
         [Export("destID")]
         string DestID { get; }
+
+		// @property (readonly, nonatomic) NSDate * _Nullable etaFromDate;
+		[NullAllowed, Export ("etaFromDate")]
+		NSDate EtaFromDate { get; }
+
+		// @property (readonly, nonatomic) NSDate * _Nullable etaToDate;
+		[NullAllowed, Export ("etaToDate")]
+		NSDate EtaToDate { get; }
     }
 
 	// typedef void (^CSUserAcknowledgeStatus)(BOOL);
 	delegate void CSUserAcknowledgeStatus(bool arg0);
 
-	// @interface CSUserLocationUpdate : NSObject
+	// @interface CSUserStatusUpdate : NSObject
     [Protocol]
 	[BaseType(typeof(NSObject))]
 	interface CSUserStatusUpdate
@@ -458,6 +415,14 @@ namespace Curbside
         [Export("tripInfos")]
         CSTripInfo[] TripInfos { get; }
 
+		// @property (readonly, nonatomic) NSString * _Nonnull arrivalZone;
+		[Export ("arrivalZone")]
+		string ArrivalZone { get; }
+
+		// @property (readonly, nonatomic) CSMotionActivity motionActivity;
+		[Export ("motionActivity")]
+		CSMotionActivity MotionActivity { get; }
+
         // -(void)monitoringSessionUserAcknowledgesUserWithMessage:(NSString * _Nonnull)ackMessage handler:(CSUserAcknowledgeStatus _Nonnull)acknowledgeStatusHandler;
         [Export("monitoringSessionUserAcknowledgesUserWithMessage:handler:")]
         void MonitoringSessionUserAcknowledgesUserWithMessage(string ackMessage, CSUserAcknowledgeStatus acknowledgeStatusHandler);
@@ -475,7 +440,11 @@ namespace Curbside
     [Protocol]
 	[BaseType(typeof(WKWebView))]
 	interface CSWKWebView
-	{
+	{		
+		// @property (nonatomic, strong) NSString * webViewURLString;
+		[Export ("webViewURLString", ArgumentSemantic.Strong)]
+		string WebViewURLString { get; set; }
+		
 		// @property (nonatomic, strong) NSString * authenticationToken;
 		[Export("authenticationToken", ArgumentSemantic.Strong)]
 		string AuthenticationToken { get; set; }
@@ -501,6 +470,14 @@ namespace Curbside
 		// @property (nonatomic, strong) NSString * crbsWebAction;
 		[Export("crbsWebAction", ArgumentSemantic.Strong)]
 		string CrbsWebAction { get; set; }
+
+		// @property (nonatomic, strong) CLLocation * userLocation;
+		[Export ("userLocation", ArgumentSemantic.Strong)]
+		CLLocation UserLocation { get; set; }
+
+		// @property (nonatomic, strong) NSString * userLocationName;
+		[Export ("userLocationName", ArgumentSemantic.Strong)]
+		string UserLocationName { get; set; }
 
 		// @property (nonatomic) BOOL developmentMode;
 		[Export("developmentMode")]

@@ -1,9 +1,9 @@
 ﻿using Android.App;
 using Android.Widget;
 using Android.OS;
-using Android.Support.V7.App;
-using Android.Support.V4.App;
-using Android.Support.V4.Content;
+using AndroidX.AppCompat.App;
+using AndroidX.Core.App;
+using AndroidX.Core.Content;
 using System.Linq;
 using System;
 using Android.Gms.Common;

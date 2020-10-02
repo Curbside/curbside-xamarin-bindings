@@ -46,6 +46,7 @@ namespace Curbside
         TooManySites,
         TrackTokenAlreadyUsed,
         InvalidLocation,
+        PreciseLocationUnavailable,
         Unknown
     }
 
@@ -85,7 +86,8 @@ namespace Curbside
         CancelTrack,
         UpdateLocations,
         NotifyMonitoringSessionUser,
-        EtaToSite
+        EtaToSite,
+        UserOnTheirWay
     }
 
     public enum CLAuthorizationStatus

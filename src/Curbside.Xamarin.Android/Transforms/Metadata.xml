@@ -19,13 +19,14 @@
 
 	<!-- In c#, we can't have an inner type and member with the same name, so rename some members so they don't collide with the inner types -->
 	<attr path="/api/package[@name='com.curbside.sdk.event']/class[@name='Path']/field[@name='path']" name="managedName">PathValue</attr>
-	<attr path="/api/package[@name='com.curbside.sdk']/class[@name='TrackingLocation']/field[@name='geo']" name="managedName">GeoValue</attr>
 	<attr path="/api/package[@name='com.curbside.sdk']/class[@name='LocationReport']/field[@name='iAmHere']" name="managedName">IAmHereValue</attr>
    <!-- Remove a function that is abstract because it's hiding the parent implementation due to differences in Java and C# inheritance 
          Also remove an unused class -->
     <remove-node path="/api/package[@name='com.curbside.sdk']/class[@name='CSUserSession']/method[@name='setUserInfo' and count(parameter)=1 and parameter[1][@type='com.curbside.sdk.model.CSUserInfo']]"/>
     <remove-node path="/api/package[@name='com.curbside.sdk']/class[@name='CSUserSession']/method[@name='cancelMockTrip']"/>
     <remove-node path="/api/package[@name='com.curbside.sdk']/class[@name='CSMockSimulator']"/>
+    <remove-node path="/api/package[@name='com.curbside.sdk']/class[@name='TrackingLocation']/field[@name='geo']"/>
+    
 
     <remove-node path="/api/package[@name='org.joda.time']/class[@name='Days']"/>
     <remove-node path="/api/package[@name='org.joda.time']/class[@name='Duration']"/>
