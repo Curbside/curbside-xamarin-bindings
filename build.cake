@@ -6,14 +6,14 @@ using Cake.Common.Build.TeamCity.Data;
 var target = Argument("target", Argument ("t", "Default"));
 
 var buildNumber = EnvironmentVariable("BUILD_BUILDNUMBER") ?? "0";
-var nugetVersion = $"3.4.{buildNumber}";
+var nugetVersion = $"3.5.{buildNumber}";
 
 var externalVersions = new
 {
     RxAndroid = "1.2.1",
     RxJava = "1.1.6",
-    CurbsideIos = "3.31",
-    CurbsideAndroid = "3.3.0"
+    CurbsideIos = "3.5",
+    CurbsideAndroid = "3.4"
 };
 
 Task("externals").Does(() => 
@@ -33,11 +33,11 @@ Task("externals").Does(() =>
         "./externals/rxjava.jar");
 
     DownloadFile(
-        $"http://cs-web-downloads.s3-website-us-west-2.amazonaws.com/SDKs/curbside-android-sdk-release.{externalVersions.CurbsideAndroid}.aar",
+        $"https://downloads.rakutenready.com/SDKs/curbside-android-sdk-release.{externalVersions.CurbsideAndroid}.aar",
         "./externals/curbside-android-sdk.aar");
 
     DownloadFile(
-        $"http://cs-web-downloads.s3-website-us-west-2.amazonaws.com/SDKs/Curbside.framework.v{externalVersions.CurbsideIos}.tar.gz",
+        $"https://downloads.rakutenready.com/SDKs/Curbside.framework.v{externalVersions.CurbsideIos}.tar.gz",
         "./tmp/curbside-ios.tar.gz");
     GZipUncompress("./tmp/curbside-ios.tar.gz", "./tmp/curbside-ios");
     CopyDirectory("./tmp/curbside-ios/Curbside/Curbside.framework", "./externals/Curbside.framework");

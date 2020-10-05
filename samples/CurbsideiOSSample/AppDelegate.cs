@@ -1,5 +1,6 @@
 ﻿using System;
 using Curbside;
+using CoreLocation;
 using Foundation;
 using UIKit;
 
@@ -13,8 +14,15 @@ namespace CurbsideiOSSample
 
 		public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
 		{
+            var manager = new CLLocationManager();
+            manager.AuthorizationChanged += (sender, args) => {
+                Console.WriteLine("Authorization changed to: {0}", args.Status);
+            };
+            if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
+                manager.RequestWhenInUseAuthorization();
+
             // Rakuten Ready Demo Token
-            var sdkSession = CSUserSession.WithUsageToken("dfbe9fb7ad7c659ebd256626a325daca7c6045c8cd3d8d10fcc644b511d82d63", null);
+            var sdkSession = CSUserSession.createSessionWithUsageToken("dfbe9fb7ad7c659ebd256626a325daca7c6045c8cd3d8d10fcc644b511d82d63", null);
             sdkSession.Application(application, launchOptions ?? new NSDictionary());
 
             CSUserSession.CurrentSession.TrackingIdentifier = "hello12345";
@@ -56,7 +64,7 @@ namespace CurbsideiOSSample
                 TrackerEncounteredError?.Invoke(this, error);
             }
 
-            public override void CanNotifyAssociateAtSite(CSUserSession session, CSUserSite site)
+            public override void CanNotifyMonitoringSessionUserAtSite(CSUserSession session, CSSite site)
             {
                 System.Diagnostics.Debug.WriteLine(site.Description.ToString());
 
@@ -67,8 +75,15 @@ namespace CurbsideiOSSample
                 System.Diagnostics.Debug.WriteLine(newState.ToString());
 
             }
-            public override void UpdatedTrackedSites(CSSession session, NSSet<CSSite> trackedSites)
+
+            public override void UpdatedTrackedSites(CSUserSession session, NSSet<CSSite> trackedSites)
             {
+                System.Diagnostics.Debug.WriteLine(trackedSites.ToString());
+            }
+
+            public override void TripStartedForSite(CSUserSession session, CSSite site)
+            {
+                System.Diagnostics.Debug.WriteLine(site.Description.ToString());
             }
         }
 	}
